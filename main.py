@@ -27,10 +27,9 @@ PLAYING, SELECT, GAME_OVER = range(3)
 
 def start(update: Update, context: CallbackContext):
     context.user_data.clear()
-    keyboard = [
-        list(InlineKeyboardButton(dict_[0], callback_data=i) for i, dict_ in enumerate(dicts))
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
+    keyboard = list(InlineKeyboardButton(dict_[0], callback_data=i) for i, dict_ in enumerate(dicts))
+    keys_in_row = 2
+    reply_markup = InlineKeyboardMarkup([keyboard[i:i + keys_in_row] for i in range(0, len(keyboard), keys_in_row)])
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text='Привет! ✌\nЯ буду присылать голосовые, а ты будешь правильно писать слова.\n'
                                   'Выбери набор слов, который хочешь проверить',
