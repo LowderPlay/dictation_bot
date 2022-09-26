@@ -69,7 +69,7 @@ def play(update: Update, context: CallbackContext):
         context.user_data['word'] += 1
         correct = context.user_data['last_word'].strip().lower()
         user_input = update.message.text.strip().lower()
-        if correct != user_input:
+        if correct.replace('ё', 'е') != user_input.replace('ё', 'е'):
             text = "❌ Неверно!"
             context.user_data['incorrect'].append((correct, user_input))
         else:
