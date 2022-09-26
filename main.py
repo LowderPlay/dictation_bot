@@ -67,9 +67,11 @@ def fix(update: Update, context: CallbackContext):
 def play(update: Update, context: CallbackContext):
     if 'last_word' in context.user_data:
         context.user_data['word'] += 1
-        if context.user_data['last_word'].lower() != update.message.text.lower():
+        correct = context.user_data['last_word'].strip().lower()
+        user_input = update.message.text.strip().lower()
+        if correct != user_input:
             text = "❌ Неверно!"
-            context.user_data['incorrect'].append((context.user_data['last_word'].lower(), update.message.text.lower()))
+            context.user_data['incorrect'].append((correct, user_input))
         else:
             text = "✅ Верно!"
         left = len(context.user_data['sample']) - context.user_data['word']
