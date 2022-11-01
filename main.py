@@ -16,6 +16,7 @@ dicts = [
     ('Словарь (4-6)', dictionary[3*64:].reset_index(drop=True)),
     ('56 наречий', pd.read_excel('adverbs.xls', 0, header=None).stack()),
     ('Н и НН', pd.read_excel('nn.xls', 0, header=None).stack()),
+    ('При/Пре', pd.read_excel('pri_pre.xls', 0, header=None).stack()),
 ]
 
 updater = Updater(token=os.environ['TOKEN'], use_context=True)
