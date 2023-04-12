@@ -44,9 +44,12 @@ def show(update: Update, context: CallbackContext):
         context.bot.send_message(chat_id=update.effective_chat.id,
                                  text='🤩 Поздравляю! У тебя нет ошибок!')
     else:
+        mistakes = []
+        for correct, incorrect in context.user_data['incorrect']:
+            mistakes.append((correct.replace("-", "\\-"), incorrect.replace("-", "\\-")))
         context.bot.send_message(chat_id=update.effective_chat.id, parse_mode='MarkdownV2',
                                  text='Твои ошибки:\n'
-                                      + ',\n'.join(f'*{x[0]}* \(~{x[1]}~\)' for x in context.user_data['incorrect']))
+                                      + ',\n'.join(f'*{correct}* \(~{incorrect}~\)' for correct, incorrect in mistakes))
     return ConversationHandler.END
 
 
