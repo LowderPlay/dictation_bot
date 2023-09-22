@@ -40,9 +40,14 @@ async def select_mode(update: Update, context: CallbackContext):
         return SELECT_TEST
 
 
+async def start_query(update: Update, context: CallbackContext):
+    await update.callback_query.answer("Бот был перезапущен, придётся начать сначала :(")
+    return await start(update, context)
+
+
 restart = MessageHandler(filters=(~filters.COMMAND | filters.Regex('/start')), callback=start)
 conv_handler = ConversationHandler(
-    entry_points=[restart],
+    entry_points=[restart, CallbackQueryHandler(callback=start_query)],
     states={
         SELECT_MODE: [CallbackQueryHandler(select_mode)],
 
